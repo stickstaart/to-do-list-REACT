@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Calibri', 'Segoe UI', 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    background-color: white; /* Optional: background for the body */
+}
+
+.main-container {
+    padding: 10px;
+    width: 600px;
+    height: auto;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: limegreen;
+    text-align: center;
+}
+
+.header {
+    margin: 10px
+}
+
+.todolist {
+    width: 100%;
+
+}
+
+.item {
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    background-color: lightcyan;
+}
+
+.add-todo {
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    background-color: lightcyan;
+}
+
+.task {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checked {
+    text-decoration: line-through;
+}
+
+.not-checked {
+    text-decoration: none;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check {
+    margin-right: 10px;
+}
+
+.cross {
+margin-left: 10px;
+    padding: 0px 10px 0px 10px;
+}
+
+.add-name {
+    padding: 5px;
+}
+
+.add-date {
+    padding: 5px;
+}
+
+.add-button {
+    padding-left: 5px;
+    padding-right: 5px;
+}
