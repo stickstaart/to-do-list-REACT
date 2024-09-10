@@ -40,7 +40,7 @@ const App = () => {
   }
 
   function handleDeleteTodo (id, name) {
-    console.log(id, name)
+    // console.log(id, name)
     if (window.confirm(`No waaaaay?! Delete ${name}???`)) {
       setTodos(prevState => prevState.filter((item) => item.id !== id))
     }
@@ -54,11 +54,14 @@ const App = () => {
     )
   }
 
-  function handleEditTodo (id, name) {
-    return (
-      <div>edit todo</div>
+  function handleEditTodo(id, name, date, checked) {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, name, date, checked } : todo
+      )
     )
   }
+
 
   return (
     <div className="main-container">
@@ -80,26 +83,61 @@ const TodoList = ({ todos, onDelete, onCheckChange, onEdit }) => {
         ))}
       </ul>
     </div>
-
   )
 }
 
+
 const TodoItem = ({ todo, onDelete, onCheckChange, onEdit }) => {
+  const [editing, setEditing] = useState(false)
+  const [editedTodo, setEditedTodo] = useState(todo)
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault()
+    onEdit(editedTodo.id, editedTodo.name, editedTodo.date, editedTodo.checked)
+    setEditing(false)
+  }
+
   return (
     <div className={'item'}>
-      <div className={'task'}>
-        <input className={'check'} type="checkbox" onChange={(e) => onCheckChange(todo.id, e.target.checked)}
-               checked={todo.checked}/>
-        <span className={todo.checked ? 'checked' : 'not-checked'}>{todo.name}</span>
-      </div>
-      <div className={'date'}>
-        <span>{todo.date}</span>
-        <Button onClick={() => onEdit(todo.id, todo.name)}>📝</Button>
-        <Button onClick={() => onDelete(todo.id, todo.name)}>🗑️</Button>
-      </div>
+      {!editing ? (
+        <>
+          <div className={'task'}>
+            <input className={'check'} type="checkbox" onChange={(e) => onCheckChange(todo.id, e.target.checked)}
+                   checked={todo.checked}/>
+            <span className={todo.checked ? 'checked' : 'not-checked'}>{todo.name}</span>
+          </div>
+          <div className={'date'}>
+            <span>{todo.date}</span>
+            <Button onClick={() => setEditing(true)}>📝</Button>
+            <Button onClick={() => onDelete(todo.id, todo.name)}>🗑️</Button>
+          </div>
+        </>
+      ) : (
+        <form onSubmit={handleEditSubmit} className={'edit-form'}>
+          <input
+            value={editedTodo.name}
+            onChange={(e) => setEditedTodo({...editedTodo, name: e.target.value})}
+            placeholder="Name"
+          />
+          <input
+            value={editedTodo.date}
+            onChange={(e) => setEditedTodo({...editedTodo, date: e.target.value})}
+            type="date"
+            placeholder="Date"
+          />
+          <input
+            type="checkbox"
+            checked={editedTodo.checked}
+            onChange={(e) => setEditedTodo({...editedTodo, checked: e.target.checked})}
+          />
+          <Button type="submit">Save Changes</Button>
+          <Button onClick={() => setEditing(false)}>Cancel</Button>
+        </form>
+      )}
     </div>
   )
 }
+
 
 const AddTodo = ({ onAdd }) => {
   const [name, setName] = useState('')
