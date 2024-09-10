@@ -39,9 +39,9 @@ const App = () => {
     setTodos(todos => [...todos, todo])
   }
 
-  function handleDelete (id, name) {
+  function handleDeleteTodo (id, name) {
     console.log(id, name)
-    if (window.confirm(`are you sure you want to delete task ${name}?`)) {
+    if (window.confirm(`No waaaaay?! Ditch ${name}???`)) {
       setTodos(prevState => prevState.filter((item) => item.id !== id))
     }
   }
@@ -54,9 +54,15 @@ const App = () => {
     )
   }
 
+  function handleEditTodo (id, name) {
+    return (
+      <div>POOP</div>
+    )
+  }
+
   return (
     <div className="main-container">
-      <TodoList todos={todos} onDelete={handleDelete} onCheckChange={handleCheckboxChange}/>
+      <TodoList todos={todos} onDelete={handleDeleteTodo} onCheckChange={handleCheckboxChange} onEdit={handleEditTodo}/>
       <AddTodo onAdd={handleAddTodo}/>
     </div>
   )
@@ -64,13 +70,13 @@ const App = () => {
 
 export default App
 
-const TodoList = ({ todos, onDelete, onCheckChange }) => {
+const TodoList = ({ todos, onDelete, onCheckChange, onEdit }) => {
   return (
     <div className={'todolist'}>
       <h2 className={'header'}>✏️ TODO LIST ✍🏼</h2>
       <ul>
         {todos.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} onDelete={onDelete} onCheckChange={onCheckChange}/>
+          <TodoItem key={todo.id} todo={todo} onDelete={onDelete} onCheckChange={onCheckChange} onEdit={onEdit}/>
         ))}
       </ul>
     </div>
@@ -78,7 +84,7 @@ const TodoList = ({ todos, onDelete, onCheckChange }) => {
   )
 }
 
-const TodoItem = ({ todo, onDelete, onCheckChange }) => {
+const TodoItem = ({ todo, onDelete, onCheckChange, onEdit }) => {
   return (
     <div className={'item'}>
       <div className={'task'}>
@@ -88,7 +94,8 @@ const TodoItem = ({ todo, onDelete, onCheckChange }) => {
       </div>
       <div className={'date'}>
         <span>{todo.date}</span>
-        <button className={'cross'} onClick={() => onDelete(todo.id, todo.name)}>❌</button>
+        <Button onClick={() => onEdit(todo.id, todo.name)}>📝</Button>
+        <Button onClick={() => onDelete(todo.id, todo.name)}>🗑️</Button>
       </div>
     </div>
   )
@@ -127,7 +134,16 @@ const AddTodo = ({ onAdd }) => {
         <label htmlFor="date">Date: </label>
         <input onChange={(e) => setDate(e.target.value)} value={date} id={'date'} type="date"/>
       </div>
-      <button className={'add-button'}>ADD TODO</button>
+      <Button> ADD TODO </Button>
     </form>
+  )
+}
+
+const Button = ({children, onClick}) => {
+  return (
+    <>
+      <button className={'button'} onClick={onClick}>{children}</button>
+    </>
+
   )
 }
