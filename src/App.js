@@ -41,7 +41,7 @@ const App = () => {
 
   function handleDeleteTodo (id, name) {
     console.log(id, name)
-    if (window.confirm(`No waaaaay?! Ditch ${name}???`)) {
+    if (window.confirm(`No waaaaay?! Delete ${name}???`)) {
       setTodos(prevState => prevState.filter((item) => item.id !== id))
     }
   }
