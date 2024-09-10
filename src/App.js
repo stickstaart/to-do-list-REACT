@@ -56,7 +56,7 @@ const App = () => {
 
   function handleEditTodo (id, name) {
     return (
-      <div>POOP</div>
+      <div>edit todo</div>
     )
   }
 
